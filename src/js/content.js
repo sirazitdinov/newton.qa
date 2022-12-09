@@ -1,7 +1,7 @@
 // 1. По правой клавише мыши показывать контекстное меню с возможностью переключиться
 //    на новую вкладку для авторизации под пользователем, который под курсором (проверка элемента на наличие ссылки на страницу пользователя)
 // 2. По контекстному меню в инпуте показывать список для ввода (например заготовки для xss)
-// 3.
+
 
 let centerX = document.documentElement.clientWidth / 2;
 let centerY = document.documentElement.clientHeight / 2;
@@ -111,26 +111,21 @@ function showInfo(event) {
 	let name = event.currentTarget.tagName;
 	console.log(name + " mouseover: " + prop);
 
-
-	// translateIt(el);
-
-
-
 }
 
-// async function translateIt(el) {
+chrome.runtime.onMessage.addListener((obj, sender, response) => {
+	const { type, value, videoId } = obj;
 
-// 	// Переводчик
-// 	const res = await fetch("https://libretranslate.com/translate", {
-// 		method: "POST",
-// 		body: JSON.stringify({
-// 			q: el.innerText,
-// 			source: "en",
-// 			target: "ru"
-// 		}),
-// 		headers: { "Content-Type": "application/json" }
-// 	});
+	if (type === "NEW") {
+		currentVideo = videoId;
+		newVideoLoaded();
+	} else if (type === "PLAY") {
+		youtubePlayer.currentTime = value;
+	} else if (type === "DELETE") {
+		currentVideoBookmarks = currentVideoBookmarks.filter((b) => b.time != value);
+		chrome.storage.sync.set({ [currentVideo]: JSON.stringify(currentVideoBookmarks) });
 
-// 	console.log(res.json());
-// }
+		response(currentVideoBookmarks);
+	}
+});
 

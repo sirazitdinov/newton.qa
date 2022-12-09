@@ -1,0 +1,23 @@
+﻿{
+  "name": "Chapter 8 (MV3) sendMessage",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "This is Chapter 8",
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://nory-soft.web.app/*/",
+    "https://norys-shop.web.app/*/"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "I am Chapter 8",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "32": "Chapter_8_32.png"
+    }
+  }
+}
